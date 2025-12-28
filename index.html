@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explain It to Yourself</title>
+  <meta name="description" content="Master any concept using the Feynman Technique. Explain it simply or you don't truly understand it.">
+  <style>
+    /* ========== CSS VARIABLES & THEMES ========== */
+    :root {
+      --bg-primary: #fafafa;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f5f5f5;
+      --text-primary: #2c2c2c;
+      --text-secondary: #5a5a5a;
+      --text-muted: #8a8a8a;
+      --border: #e2e2e2;
+      --accent: #4a4a4a;
+      --focus: #3d7a8c;
+      --shadow: rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #141414;
+      --bg-secondary: #1e1e1e;
+      --bg-tertiary: #252525;
+      --text-primary: #e8e8e8;
+      --text-secondary: #b0b0b0;
+      --text-muted: #707070;
+      --border: #2e2e2e;
+      --accent: #9a9a9a;
+      --focus: #5ca3b8;
+      --shadow: rgba(0, 0, 0, 0.2);
+    }
+
+    [data-theme="sepia"] {
+      --bg-primary: #f7f1e3;
+      --bg-secondary: #fdfaf3;
+      --bg-tertiary: #f0e9d8;
+      --text-primary: #3d3427;
+      --text-secondary: #5c5244;
+      --text-muted: #8a7f6f;
+      --border: #ddd5c3;
+      --accent: #6b5d4d;
+      --focus: #8b7355;
+      --shadow: rgba(61, 52, 39, 0.06);
+    }
+
+    [data-theme="ocean"] {
+      --bg-primary: #f0f5f7;
+      --bg-secondary: #f8fbfc;
+      --bg-tertiary: #e6eff2;
+      --text-primary: #1e3a4a;
+      --text-secondary: #3d5a6a;
+      --text-muted: #6a8a9a;
+      --border: #d0dfe5;
+      --accent: #2d5a6a;
+      --focus: #2980b9;
+      --shadow: rgba(30, 58, 74, 0.06);
+    }
+
+    [data-theme="forest"] {
+      --bg-primary: #f2f5f0;
+      --bg-secondary: #f9faf7;
+      --bg-tertiary: #e8ede5;
+      --text-primary: #2d3a28;
+      --text-secondary: #4a5a44;
+      --text-muted: #6a7a64;
+      --border: #d0ddc8;
+      --accent: #3d5a35;
+      --focus: #4a7a42;
+      --shadow: rgba(45, 58, 40, 0.06);
+    }
+
+    [data-theme="lavender"] {
+      --bg-primary: #f5f3f8;
+      --bg-secondary: #fbfafc;
+      --bg-tertiary: #ece8f2;
+      --text-primary: #2d2a3a;
+      --text-secondary: #4a455a;
+      --text-muted: #7a7590;
+      --border: #ddd8e8;
+      --accent: #5a4a7a;
+      --focus: #7b68a8;
+      --shadow: rgba(45, 42, 58, 0.06);
+    }
+
+    [data-theme="midnight"] {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #1c2128;
+      --text-primary: #c9d1d9;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --focus: #58a6ff;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="paper"] {
+      --bg-primary: #fffef9;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #faf9f4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --text-muted: #7a7a7a;
+      --border: #eae8e0;
+      --accent: #2a2a2a;
+      --focus: #5a5a5a;
+      --shadow: rgba(0, 0, 0, 0.03);
+    }
+
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.75;
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* ========== TYPOGRAPHY ========== */
+    h1, h2, h3 {
+      font-weight: normal;
+      line-height: 1.3;
+      color: var(--text-primary);
+    }
+
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    p {
+      color: var(--text-secondary);
+    }
+
+    /* ========== LAYOUT ========== */
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    /* ========== THEME SWITCHER ========== */
+    .theme-switcher {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+    }
+
+    .theme-toggle {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.5rem 0.85rem;
+      font-size: 0.8rem;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: border-color 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--text-muted);
+    }
+
+    .theme-toggle:focus {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .theme-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: 0 4px 20px var(--shadow);
+      min-width: 140px;
+      overflow: hidden;
+    }
+
+    .theme-menu.active {
+      display: block;
+    }
+
+    .theme-option {
+      display: block;
+      width: 100%;
+      padding: 0.6rem 1rem;
+      text-align: left;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .theme-option:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .theme-option.active {
+      color: var(--focus);
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero h1 {
+      margin-bottom: 0.75rem;
+    }
+
+    .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .purpose {
+      font-size: 0.95rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ========== FORM ELEMENTS ========== */
+    .input-field, .textarea-field {
+      width: 100%;
+      padding: 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-field:focus, .textarea-field:focus {
+      outline: none;
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(61, 122, 140, 0.1);
+    }
+
+    .input-field::placeholder, .textarea-field::placeholder {
+      color: var(--text-muted);
+    }
+
+    .textarea-field {
+      min-height: 200px;
+      resize: vertical;
+    }
+
+    .textarea-small {
+      min-height: 80px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ========== CONCEPT INPUT ========== */
+    .concept-section .input-field {
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    /* ========== EXPLANATION AREA ========== */
+    .explanation-section .textarea-field {
+      min-height: 280px;
+    }
+
+    /* ========== SELF-CHECK ========== */
+    .self-check {
+      background: var(--bg-tertiary);
+      padding: 1.5rem;
+      border-radius: 6px;
+    }
+
+    .checklist {
+      list-style: none;
+    }
+
+    .checklist li {
+      margin-bottom: 0.6rem;
+    }
+
+    .checklist label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      cursor: pointer;
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+
+    .checklist input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 0.15rem;
+      cursor: pointer;
+      accent-color: var(--focus);
+      flex-shrink: 0;
+    }
+
+    .check-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* ========== REFINEMENT ========== */
+    .refinement-section .textarea-field {
+      margin-bottom: 1rem;
+    }
+
+    .refinement-section .textarea-field:last-of-type {
+      margin-bottom: 0;
+    }
+
+    /* ========== SAVE SECTION ========== */
+    .save-section {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      padding: 0.7rem 1.25rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--text-muted);
+      color: var(--text-primary);
+    }
+
+    .btn:focus {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      border-color: var(--text-primary);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      color: var(--bg-primary);
+    }
+
+    .btn-danger {
+      color: #c0392b;
+      border-color: #e0b0ab;
+    }
+
+    .btn-danger:hover {
+      background: #fdf0ef;
+      border-color: #c0392b;
+    }
+
+    [data-theme="dark"] .btn-danger:hover,
+    [data-theme="midnight"] .btn-danger:hover {
+      background: #2a1f1e;
+    }
+
+    /* ========== SAVED LIST ========== */
+    .saved-list {
+      margin-top: 1rem;
+    }
+
+    .saved-list h3 {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      font-weight: normal;
+    }
+
+    .saved-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .saved-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      gap: 1rem;
+    }
+
+    .saved-item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .saved-item-title {
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .saved-item-title:hover {
+      color: var(--focus);
+    }
+
+    .saved-item-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .saved-item-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-small {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.8rem;
+    }
+
+    .empty-state {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* ========== WHY THIS WORKS ========== */
+    .why-section {
+      background: var(--bg-tertiary);
+      padding: 1.5rem;
+      border-radius: 6px;
+      margin-top: 2rem;
+    }
+
+    .why-section h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .why-section p {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .why-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .why-section strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    footer a:hover {
+      color: var(--focus);
+    }
+
+    /* ========== NOTIFICATION ========== */
+    .notification {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 0.85rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .notification.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .hero {
+        padding: 2rem 0 1.5rem;
+      }
+
+      .theme-switcher {
+        top: 0.75rem;
+        right: 0.75rem;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .saved-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .saved-item-actions {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+
+      .saved-item-actions .btn-small {
+        flex: 1;
+        text-align: center;
+      }
+    }
+
+    /* ========== PRINT STYLES ========== */
+    @media print {
+      .theme-switcher,
+      .save-section,
+      .notification {
+        display: none;
+      }
+
+      body {
+        background: white;
+        color: black;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <!-- Theme Switcher -->
+  <div class="theme-switcher">
+    <button class="theme-toggle" id="themeToggle" aria-label="Change theme" aria-expanded="false">
+      Theme ▾
+    </button>
+    <div class="theme-menu" id="themeMenu" role="menu">
+      <button class="theme-option active" data-theme="light" role="menuitem">Light</button>
+      <button class="theme-option" data-theme="dark" role="menuitem">Dark</button>
+      <button class="theme-option" data-theme="sepia" role="menuitem">Sepia</button>
+      <button class="theme-option" data-theme="ocean" role="menuitem">Ocean</button>
+      <button class="theme-option" data-theme="forest" role="menuitem">Forest</button>
+      <button class="theme-option" data-theme="lavender" role="menuitem">Lavender</button>
+      <button class="theme-option" data-theme="midnight" role="menuitem">Midnight</button>
+      <button class="theme-option" data-theme="paper" role="menuitem">Paper</button>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification" id="notification" role="status" aria-live="polite"></div>
+
+  <div class="container">
+    
+    <!-- Hero Section -->
+    <header class="hero">
+      <h1>Explain It to Yourself</h1>
+      <p class="subtitle">"If you can't explain it simply, you don't understand it."</p>
+      <p class="purpose">Use this space to truly understand any concept by writing it out in your own words—as if teaching someone who's never heard of it.</p>
+    </header>
+
+    <main>
+      
+      <!-- Concept Input Section -->
+      <section class="concept-section">
+        <label for="conceptInput">What concept are you learning?</label>
+        <input 
+          type="text" 
+          id="conceptInput" 
+          class="input-field" 
+          placeholder="e.g. Binary Search, Photosynthesis, Supply & Demand"
+          autocomplete="off"
+        >
+      </section>
+
+      <!-- Explanation Writing Area -->
+      <section class="explanation-section">
+        <label for="explanationArea">Your explanation</label>
+        <textarea 
+          id="explanationArea" 
+          class="textarea-field"
+          placeholder="Explain this concept as if you're teaching it to a beginner who has no background in this topic. Use simple words. Give an example. Pretend you're writing for a curious 12-year-old…"
+        ></textarea>
+      </section>
+
+      <!-- Self-Check Section -->
+      <section class="self-check">
+        <h2>Self-Check</h2>
+        <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-secondary);">
+          Review your explanation honestly:
+        </p>
+        <ul class="checklist">
+          <li>
+            <label>
+              <input type="checkbox" id="check1">
+              <span>No jargon left unexplained</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" id="check2">
+              <span>Uses simple, everyday language</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" id="check3">
+              <span>Includes a clear example or analogy</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" id="check4">
+              <span>Ideas flow logically from start to end</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" id="check5">
+              <span>Written in my own words (not copied)</span>
+            </label>
+          </li>
+        </ul>
+        <p class="check-note">These are for self-reflection only. Be honest with yourself.</p>
+      </section>
+
+      <!-- Refinement Prompt Section -->
+      <section class="refinement-section">
+        <h2>Reflect on Your Gaps</h2>
+        <label for="hardPart">What part felt hard to explain?</label>
+        <textarea 
+          id="hardPart" 
+          class="textarea-field textarea-small"
+          placeholder="The part where I tried to explain why... I kept going in circles..."
+        ></textarea>
+        
+        <label for="gaps">What did you realize you don't fully understand?</label>
+        <textarea 
+          id="gaps" 
+          class="textarea-field textarea-small"
+          placeholder="I'm not sure about the exact mechanism of... I need to revisit..."
+        ></textarea>
+      </section>
+
+      <!-- Local Save Section -->
+      <section class="save-section">
+        <h2>Save Your Work</h2>
+        <div class="button-group">
+          <button class="btn btn-primary" id="saveBtn">Save Explanation</button>
+          <button class="btn" id="clearBtn">Clear Form</button>
+        </div>
+        
+        <div class="saved-list" id="savedList">
+          <h3>Saved Explanations</h3>
+          <div class="saved-items" id="savedItems">
+            <p class="empty-state">No saved explanations yet.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why This Works Section -->
+      <section class="why-section">
+        <h2>Why This Works</h2>
+        <p>
+          <strong>Active recall:</strong> Writing forces you to retrieve information from memory, not just recognize it. This strengthens learning far more than re-reading.
+        </p>
+        <p>
+          <strong>Elaboration:</strong> When you explain something in your own words, you connect it to what you already know, making it stick.
+        </p>
+        <p>
+          <strong>The Feynman Technique:</strong> Named after physicist Richard Feynman, this method exposes gaps in understanding. If you can't explain it simply, you're still learning it.
+        </p>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      Made with ❤️ by <a href="https://github.com/Aliriyaj007" target="_blank" rel="noopener noreferrer">Aliriyaj007</a>
+    </footer>
+
+  </div>
+
+  <script>
+    // ========== UTILITY FUNCTIONS ==========
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+    function showNotification(message) {
+      const notification = $('notification');
+      notification.textContent = message;
+      notification.classList.add('show');
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 2500);
+    }
+
+    function formatDate(timestamp) {
+      const date = new Date(timestamp);
+      const options = { month: 'short', day: 'numeric', year: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    }
+
+    function generateId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    // ========== THEME MANAGEMENT ==========
+    const themeToggle = $('themeToggle');
+    const themeMenu = $('themeMenu');
+    const themeOptions = document.querySelectorAll('.theme-option');
+
+    // Load saved theme
+    function loadTheme() {
+      try {
+        const savedTheme = localStorage.getItem('eitys-theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        updateActiveTheme(savedTheme);
+      } catch (e) {
+        // localStorage not available
+      }
+    }
+
+    function updateActiveTheme(theme) {
+      themeOptions.forEach(option => {
+        option.classList.toggle('active', option.dataset.theme === theme);
+      });
+    }
+
+    function setTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      updateActiveTheme(theme);
+      try {
+        localStorage.setItem('eitys-theme', theme);
+      } catch (e) {
+        // localStorage not available
+      }
+      themeMenu.classList.remove('active');
+      themeToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    themeToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isExpanded = themeMenu.classList.toggle('active');
+      themeToggle.setAttribute('aria-expanded', isExpanded);
+    });
+
+    themeOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        setTheme(option.dataset.theme);
+      });
+    });
+
+    // Close theme menu on outside click
+    document.addEventListener('click', (e) => {
+      if (!themeMenu.contains(e.target) && e.target !== themeToggle) {
+        themeMenu.classList.remove('active');
+        themeToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // ========== LOCAL STORAGE MANAGEMENT ==========
+    const STORAGE_KEY = 'eitys-explanations';
+
+    function getExplanations() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveExplanations(explanations) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(explanations));
+        return true;
+      } catch (e) {
+        showNotification('Unable to save. Storage might be full.');
+        return false;
+      }
+    }
+
+    // ========== FORM DATA ==========
+    function getFormData() {
+      return {
+        id: generateId(),
+        concept: $('conceptInput').value.trim(),
+        explanation: $('explanationArea').value.trim(),
+        hardPart: $('hardPart').value.trim(),
+        gaps: $('gaps').value.trim(),
+        checks: {
+          check1: $('check1').checked,
+          check2: $('check2').checked,
+          check3: $('check3').checked,
+          check4: $('check4').checked,
+          check5: $('check5').checked
+        },
+        timestamp: Date.now()
+      };
+    }
+
+    function setFormData(data) {
+      $('conceptInput').value = data.concept || '';
+      $('explanationArea').value = data.explanation || '';
+      $('hardPart').value = data.hardPart || '';
+      $('gaps').value = data.gaps || '';
+      
+      if (data.checks) {
+        $('check1').checked = data.checks.check1 || false;
+        $('check2').checked = data.checks.check2 || false;
+        $('check3').checked = data.checks.check3 || false;
+        $('check4').checked = data.checks.check4 || false;
+        $('check5').checked = data.checks.check5 || false;
+      }
+    }
+
+    function clearForm() {
+      $('conceptInput').value = '';
+      $('explanationArea').value = '';
+      $('hardPart').value = '';
+      $('gaps').value = '';
+      $('check1').checked = false;
+      $('check2').checked = false;
+      $('check3').checked = false;
+      $('check4').checked = false;
+      $('check5').checked = false;
+      $('conceptInput').focus();
+    }
+
+    // ========== RENDER SAVED LIST ==========
+    function renderSavedList() {
+      const container = $('savedItems');
+      const explanations = getExplanations();
+
+      if (explanations.length === 0) {
+        container.innerHTML = '<p class="empty-state">No saved explanations yet.</p>';
+        return;
+      }
+
+      // Sort by most recent
+      explanations.sort((a, b) => b.timestamp - a.timestamp);
+
+      container.innerHTML = explanations.map(item => `
+        <div class="saved-item" data-id="${item.id}">
+          <div class="saved-item-content">
+            <span class="saved-item-title" onclick="loadExplanation('${item.id}')">${escapeHtml(item.concept) || 'Untitled'}</span>
+            <div class="saved-item-date">${formatDate(item.timestamp)}</div>
+          </div>
+          <div class="saved-item-actions">
+            <button class="btn btn-small" onclick="loadExplanation('${item.id}')">Load</button>
+            <button class="btn btn-small btn-danger" onclick="deleteExplanation('${item.id}')">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ========== CRUD OPERATIONS ==========
+    function saveExplanation() {
+      const data = getFormData();
+      
+      if (!data.concept && !data.explanation) {
+        showNotification('Please enter a concept or explanation first.');
+        return;
+      }
+
+      const explanations = getExplanations();
+      explanations.push(data);
+      
+      if (saveExplanations(explanations)) {
+        showNotification('Explanation saved!');
+        renderSavedList();
+      }
+    }
+
+    function loadExplanation(id) {
+      const explanations = getExplanations();
+      const item = explanations.find(e => e.id === id);
+      
+      if (item) {
+        setFormData(item);
+        showNotification('Explanation loaded.');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function deleteExplanation(id) {
+      if (!confirm('Delete this explanation?')) return;
+      
+      let explanations = getExplanations();
+      explanations = explanations.filter(e => e.id !== id);
+      
+      if (saveExplanations(explanations)) {
+        showNotification('Explanation deleted.');
+        renderSavedList();
+      }
+    }
+
+    // Make functions globally accessible for onclick handlers
+    window.loadExplanation = loadExplanation;
+    window.deleteExplanation = deleteExplanation;
+
+    // ========== EVENT LISTENERS ==========
+    $('saveBtn').addEventListener('click', saveExplanation);
+    
+    $('clearBtn').addEventListener('click', () => {
+      if ($('conceptInput').value || $('explanationArea').value) {
+        if (confirm('Clear all fields? Unsaved work will be lost.')) {
+          clearForm();
+          showNotification('Form cleared.');
+        }
+      } else {
+        clearForm();
+      }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      // Ctrl/Cmd + S to save
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveExplanation();
+      }
+    });
+
+    // ========== INITIALIZE ==========
+    loadTheme();
+    renderSavedList();
+
+    // Focus concept input on load for immediate usability
+    setTimeout(() => {
+      $('conceptInput').focus();
+    }, 100);
+  </script>
+
+</body>
+</html>
